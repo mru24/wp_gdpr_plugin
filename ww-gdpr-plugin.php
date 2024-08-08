@@ -22,9 +22,7 @@ if(is_admin()) {
 }
 
 // FRONT END
-require_once(plugin_dir_path(__FILE__) . '/includes/ww-gdpr-plugin-front.php'); 
-
-
+require_once(plugin_dir_path(__FILE__) . '/includes/ww-gdpr-plugin-front.php');
 
 
 

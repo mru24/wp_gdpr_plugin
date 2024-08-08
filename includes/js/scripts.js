@@ -19,7 +19,7 @@ const hideNonEssential = () => storageType.getItem(nonEssentialCookies);
 if(storageType.getItem(nonEssentialCookies) == "true" ) {
   console.log("checkbox-true");
 } else {
-  console.log("checkbox-false");  
+  console.log("checkbox-false");
   clearCookie(GAT_cookie, domain,'/');
   clearCookie(GID_cookie, domain, '/');
   clearCookie(GA_cookie, domain,'/');
@@ -36,14 +36,14 @@ function clearCookie(name, domain, path){
                 cookie_name = '',
                 cookie_value = '',
                 b_cookie_found = false;
-      
+
               for ( i = 0; i < a_all_cookies.length; i++ ) {
                     // now we'll split apart each name=value pair
                     a_temp_cookie = a_all_cookies[i].split( '=' );
-    
+
                     // and trim left/right whitespace while we're at it
                     cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
-    
+
                     // if the extracted name matches passed check_name
                     if ( cookie_name == check_name ) {
                         b_cookie_found = true;
@@ -68,7 +68,7 @@ function clearCookie(name, domain, path){
                 document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + domain + "; path=" + path;
           }
   }
-  catch(err) {}    
+  catch(err) {}
 };
 clearCookie('__utma','.yourdomain.com','/');
 clearCookie('__utmz','.yourdomain.com','/');
@@ -79,12 +79,12 @@ window.onload = () => {
   const settingsModal = document.getElementById('wwgcbar-modal');
   const settingsBtn = document.getElementById('settingsBtn');
   const showDescr = document.querySelectorAll('.wwgcbar-show-description');
-  const closeModal = document.getElementById('wwgcbar-modal-close');  
+  const closeModal = document.getElementById('wwgcbar-modal-close');
   const non_ess_cookies = document.getElementById('nncookies');
   const cookieCollapsed = document.getElementById('wwgcbar-collapsed');
 
   const checkboxValue = () => {
-    
+
     if(storageType.getItem(nonEssentialCookies) == "true" ) {
       console.log("checkbox-true");
       non_ess_cookies.checked = true;
@@ -92,32 +92,32 @@ window.onload = () => {
     } else {
       console.log("checkbox-false");
       non_ess_cookies.checked = false;
-      document.querySelector('.wwgcbar-checkbox-text').innerHTML = 'Disabled';      
+      document.querySelector('.wwgcbar-checkbox-text').innerHTML = 'Disabled';
     }
   }
-  
+
   checkboxValue();
-  
+
   const checkBox = event => {
     if(non_ess_cookies.checked == true) {
       non_ess_cookies.value = "true";
       document.querySelector('.wwgcbar-checkbox-text').innerHTML = 'Enabled';
     } else {
       non_ess_cookies.value = "false";
-      document.querySelector('.wwgcbar-checkbox-text').innerHTML = 'Disabled';      
+      document.querySelector('.wwgcbar-checkbox-text').innerHTML = 'Disabled';
     }
   }
-  
+
   non_ess_cookies.addEventListener('click', checkBox);
 
   const addToStorage = () => {
     if(non_ess_cookies.value == "true") {
       storageType.setItem(nonEssentialCookies, true);
     } else {
-      storageType.setItem(nonEssentialCookies, false);      
+      storageType.setItem(nonEssentialCookies, false);
     }
-  }  
-    
+  }
+
   const acceptFn = event => {
     storageType.clear();
     saveToStorage(storageType);
@@ -125,22 +125,22 @@ window.onload = () => {
     consentPopup.classList.remove('active');
     cookieCollapsed.classList.remove('hidden');
   }
-  
+
   const showSettings = event => settingsModal.classList.remove('hidden');
   const closeSettings = event => settingsModal.classList.add('hidden');
-  
-  acceptBtn.addEventListener('click', acceptFn);  
+
+  acceptBtn.addEventListener('click', acceptFn);
   settingsBtn.addEventListener('click', showSettings);
   closeModal.addEventListener('click', closeSettings);
-  
+
   if(cookieCollapsed) {
     cookieCollapsed.addEventListener('click', (e) => {
       e.preventDefault();
-      consentPopup.classList.add('active'); 
+      consentPopup.classList.add('active');
     })
   }
-   
-  
+
+
   showDescr.forEach(item => {
     item.addEventListener('click', event => {
       item.classList.toggle('active');
@@ -169,7 +169,7 @@ window.onload = () => {
   }
 }
 
-  
+
 
 
 
