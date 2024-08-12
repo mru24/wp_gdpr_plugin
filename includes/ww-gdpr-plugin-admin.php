@@ -10,8 +10,20 @@ function wwgcbar_menu_link() {
 		'wwgcbar_options_content'
 	);
 }
-
 add_action('admin_menu', 'wwgcbar_menu_link');
+
+// CREATE SETTINGS LINK
+function wwgcbar_settings_link( $links ) {
+	$settings_link = "<a href='admin.php?page=wwgcbar-options'>".__('Settings').'</a>';
+
+	array_push(
+		$links,
+		$settings_link
+	);
+	return $links;
+}
+
+add_filter('plugin_action_links_'.$pluginFile, 'wwgcbar_settings_link' );
 
 function wwgcbar_options_content() {
 
@@ -24,27 +36,47 @@ function wwgcbar_options_content() {
 	<div class="wwgcbar-header">
 		<h2><?php _e('WW GDPR Bar Settings', 'wwgcbar_domain'); ?></h2>
 	</div>
-	<div class="wwgcbar-content">
+	<div class="wwgcbar-content admin">
 		<form method="post" action="options.php">
 
 			<?php settings_fields('wwgcbar_settings_group'); ?>
+			<p class="submit" style="text-align:right;">
+				<input type="submit" name="submit" id="submit" class="button button-primary disabled" value="<?php _e('Save changes', 'wwgcbar_domain'); ?>" />
+			</p>
 
 			<table class="form-table">
 				<tbody>
-
-<!-- BAR ENABLE					 -->
+<!-- BAR ENABLE -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[enable]">
-								<?php _e('Enable', 'wwgcbar_domain'); ?>
+								<?php _e('Status', 'wwgcbar_domain'); ?>
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[enable]" type="checkbox" id="wwgcbar_settings[enable]" value="1" <?php checked('1', $wwgcbar_options['enable']); ?>>
+							<p>
+								<span class="before-input" style="display:inline-block;min-width:60px;">Disabled</span>
+								<label class="switch">
+								  <input name="wwgcbar_settings[enable]" type="checkbox" id="" value="1" <?php checked('1', isset($wwgcbar_options['enable'])); ?>>
+								  <span class="slider round"></span>
+								  <span class="wwgcbar-checkbox-text"></span>
+								</label>
+								<span class="before-input">Enabled</span>
+							</p>
 						</td>
 					</tr>
-
-<!-- BAR POSITION					 -->
+<!-- COOKIE VALID DAYS -->
+					<tr>
+						<th scope="row">
+							<label for="wwgcbar_settings[valid]">
+								<?php _e('Technical cookie valid time (days)', 'wwgcbar_domain'); ?>
+							</label>
+						</th>
+						<td>
+							<input name="wwgcbar_settings[valid]" type="number" id="wwgcbar_settings[valid]" value="<?php echo isset($wwgcbar_options['valid'])?$wwgcbar_options['valid']:'30'; ?>" class="regular-text" min="1" step="1">
+						</td>
+					</tr>
+<!-- BAR POSITION -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[position]">
@@ -52,13 +84,17 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[position]" type="checkbox" id="wwgcbar_settings[position]" value="1" <?php checked('1', $wwgcbar_options['position']); ?>>
-							<p class="description">
-								<?php _e('Default position - Bottom / Checked - Top', 'wwgcbar_domain'); ?>
+							<p>
+								<span class="before-input" style="display:inline-block;min-width:60px;">Bottom</span>
+								<label class="switch">
+								  <input name="wwgcbar_settings[position]" type="checkbox" id="" value="1" <?php checked('1', isset($wwgcbar_options['position'])); ?>>
+								  <span class="slider round"></span>
+								  <span class="wwgcbar-checkbox-text"></span>
+								</label>
+								<span class="after-input">Top</span>
 							</p>
 						</td>
 					</tr>
-
 <!-- BAR TEXT CONTENT -->
 					<tr>
 						<th scope="row">
@@ -67,11 +103,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<textarea name="wwgcbar_settings[content]" id="wwgcbar_settings[content]" class="regular-text"><?php echo $wwgcbar_options['content'] ?></textarea>
+							<textarea name="wwgcbar_settings[content]" id="wwgcbar_settings[content]" class="regular-text"><?php echo isset( $wwgcbar_options['content'])?$wwgcbar_options['content']:''; ?></textarea>
 						</td>
 					</tr>
-
-<!-- BAR TEXT COLOR					 -->
+<!-- BAR TEXT COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[content_col]">
@@ -79,11 +114,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[content_col]" type="text" id="wwgcbar_settings[content_col]" value="<?php echo $wwgcbar_options['content_col']; ?>" class="regular-text" placeholder="#FFFFFF">
+							<input name="wwgcbar_settings[content_col]" type="text" id="wwgcbar_settings[content_col]" value="<?php echo isset($wwgcbar_options['content_col'])?$wwgcbar_options['content_col']:''; ?>" class="regular-text" placeholder="#FFFFFF">
 						</td>
 					</tr>
-
-<!-- BAR BACKGROUND COLOR					 -->
+<!-- BAR BACKGROUND COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[content_bg]">
@@ -91,11 +125,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[content_bg]" type="text" id="wwgcbar_settings[content_bg]" value="<?php echo $wwgcbar_options['content_bg']; ?>" class="regular-text" placeholder="#000000">
+							<input name="wwgcbar_settings[content_bg]" type="text" id="wwgcbar_settings[content_bg]" value="<?php echo isset($wwgcbar_options['content_bg'])?$wwgcbar_options['content_bg']:''; ?>" class="regular-text" placeholder="#000000">
 						</td>
 					</tr>
-
-<!-- PRIVACY POLICY LINK					 -->
+<!-- PRIVACY POLICY LINK -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[pp_link]">
@@ -103,14 +136,13 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[pp_link]" type="text" id="wwgcbar_settings[pp_link]" value="<?php echo $wwgcbar_options['pp_link']; ?>" class="regular-text">
+							<input name="wwgcbar_settings[pp_link]" type="text" placeholder="/privacy-policy" id="wwgcbar_settings[pp_link]" value="<?php echo isset($wwgcbar_options['pp_link'])?$wwgcbar_options['pp_link']:''; ?>" class="regular-text">
 							<p class="description">
 								<?php _e('Privacy Policy / Terms & Conditions page link', 'wwgcbar_domain'); ?>
 							</p>
 						</td>
 					</tr>
-
-<!-- PRIVACY POLICY OPEN TARGET					 -->
+<!-- PRIVACY POLICY OPEN TARGET -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[pp_target]">
@@ -118,11 +150,18 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[pp_target]" type="checkbox" id="wwgcbar_settings[pp_target]" value="1" <?php checked('1', $wwgcbar_options['pp_target']); ?> class="regular-text">
+							<p>
+								<span class="before-input" style="display:inline-block;min-width:60px;">Disabled</span>
+								<label class="switch">
+								  <input name="wwgcbar_settings[pp_target]" type="checkbox" id="" value="1" <?php checked('1', isset($wwgcbar_options['pp_target'])); ?>>
+								  <span class="slider round"></span>
+								  <span class="wwgcbar-checkbox-text"></span>
+								</label>
+								<span class="before-input">Enabled</span>
+							</p>
 						</td>
 					</tr>
-
-<!-- PRIVACY POLICY LINK COLOR					 -->
+<!-- PRIVACY POLICY LINK COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[content_col]">
@@ -130,10 +169,9 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[content_col_link]" type="text" id="wwgcbar_settings[content_col_link]" value="<?php echo $wwgcbar_options['content_col_link']; ?>" class="regular-text" placeholder="#FFFFFF">
+							<input name="wwgcbar_settings[content_col_link]" type="text" id="wwgcbar_settings[content_col_link]" value="<?php echo isset($wwgcbar_options['content_col_link'])?$wwgcbar_options['content_col_link']:''; ?>" class="regular-text" placeholder="#FFFFFF">
 						</td>
 					</tr>
-
 <!-- ACCEPT BUTTON TEXT -->
 					<tr>
 						<th scope="row">
@@ -142,11 +180,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_1_text]" type="text" id="wwgcbar_settings[button_1_text]" value="<?php echo $wwgcbar_options['button_1_text']; ?>" class="regular-text">
+							<input name="wwgcbar_settings[button_1_text]" type="text" id="wwgcbar_settings[button_1_text]" value="<?php echo isset($wwgcbar_options['button_1_text'])?$wwgcbar_options['button_1_text']:''; ?>" class="regular-text">
 						</td>
 					</tr>
-
-<!-- ACCEPT BUTTON TEXT COLOR				 -->
+<!-- ACCEPT BUTTON TEXT COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[button_1_col]">
@@ -154,11 +191,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_1_col]" type="text" id="wwgcbar_settings[button_1_col]" value="<?php echo $wwgcbar_options['button_1_col']; ?>" class="regular-text" placeholder="#FFFFFF">
+							<input name="wwgcbar_settings[button_1_col]" type="text" id="wwgcbar_settings[button_1_col]" value="<?php echo isset($wwgcbar_options['button_1_col'])?$wwgcbar_options['button_1_col']:''; ?>" class="regular-text" placeholder="#FFFFFF">
 						</td>
 					</tr>
-
-<!-- ACCEPT BUTTON BACKGROUND COLOR					 -->
+<!-- ACCEPT BUTTON BACKGROUND COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[button_1_bg]">
@@ -166,11 +202,9 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_1_bg]" type="text" id="wwgcbar_settings[button_1_bg]" value="<?php echo $wwgcbar_options['button_1_bg']; ?>" class="regular-text" placeholder="#000000">
+							<input name="wwgcbar_settings[button_1_bg]" type="text" id="wwgcbar_settings[button_1_bg]" value="<?php echo isset($wwgcbar_options['button_1_bg'])?$wwgcbar_options['button_1_bg']:''; ?>" class="regular-text" placeholder="#000000">
 						</td>
 					</tr>
-<!-- ACCEPT BUTTON END -->
-
 <!-- SETTINGS BUTTON TEXT -->
 					<tr>
 						<th scope="row">
@@ -179,11 +213,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_2_text]" type="text" id="wwgcbar_settings[button_2_text]" value="<?php echo $wwgcbar_options['button_2_text']; ?>" class="regular-text">
+							<input name="wwgcbar_settings[button_2_text]" type="text" id="wwgcbar_settings[button_2_text]" value="<?php echo isset($wwgcbar_options['button_2_text'])?$wwgcbar_options['button_2_text']:''; ?>" class="regular-text">
 						</td>
 					</tr>
-
-<!-- MORE INFO BUTTON TEXT COLOR					 -->
+<!-- MORE INFO BUTTON TEXT COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[button_2_col]">
@@ -191,11 +224,10 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_2_col]" type="text" id="wwgcbar_settings[button_2_text]" value="<?php echo $wwgcbar_options['button_2_col']; ?>" class="regular-text" placeholder="#FFFFFF">
+							<input name="wwgcbar_settings[button_2_col]" type="text" id="wwgcbar_settings[button_2_text]" value="<?php echo isset($wwgcbar_options['button_2_col'])?$wwgcbar_options['button_2_col']:''; ?>" class="regular-text" placeholder="#FFFFFF">
 						</td>
 					</tr>
-
-<!-- MORE INFO BUTTON BACKGROUND COLOR					 -->
+<!-- MORE INFO BUTTON BACKGROUND COLOR -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[button_2_bg]">
@@ -203,11 +235,9 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[button_2_bg]" type="text" id="wwgcbar_settings[button_2_bg]" value="<?php echo $wwgcbar_options['button_2_bg']; ?>" class="regular-text" placeholder="#000000">
+							<input name="wwgcbar_settings[button_2_bg]" type="text" id="wwgcbar_settings[button_2_bg]" value="<?php echo isset($wwgcbar_options['button_2_bg'])?$wwgcbar_options['button_2_bg']:''; ?>" class="regular-text" placeholder="#000000">
 						</td>
 					</tr>
-<!-- MORE INFO BUTTON END -->
-
 <!-- SWAP BUTTONS PLACES -->
 					<tr>
 						<th scope="row">
@@ -216,11 +246,19 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<input name="wwgcbar_settings[buttons_swap]" type="checkbox" id="wwgcbar_settings[buttons_swap]" value="1" <?php checked('1', $wwgcbar_options['buttons_swap']); ?> class="regular-text">
+							<p>
+								<span class="before-input" style="display:inline-block;min-width:60px;">Accept / Settings</span>
+								<label class="switch">
+								  <input name="wwgcbar_settings[buttons_swap]" type="checkbox" id="" value="1" <?php checked('1', isset($wwgcbar_options['buttons_swap'])); ?>>
+								  <span class="slider round"></span>
+								  <span class="wwgcbar-checkbox-text"></span>
+								</label>
+								<span class="before-input">Settings / Accept</span>
+							</p>
 						</td>
 					</tr>
 
-<!-- SETTINGS MODAL					 -->
+<!-- SETTINGS MODAL		-->
 
 <!-- TEXT CONTENT 1 -->
 					<tr>
@@ -230,45 +268,42 @@ function wwgcbar_options_content() {
 							</label>
 						</th>
 						<td>
-							<textarea name="wwgcbar_settings[content1]" id="wwgcbar_settings[content1]" class="regular-text"><?php echo $wwgcbar_options['content1'] ?></textarea>
+							<textarea name="wwgcbar_settings[content1]" id="wwgcbar_settings[content1]" class="regular-text"><?php echo isset($wwgcbar_options['content1'])?$wwgcbar_options['content1']:''; ?></textarea>
 						</td>
 					</tr>
-
-					<tr>
-						<th scope="row">
-							<label for="wwgcbar_settings[content12]">
-								<?php _e('Policy overview main text part 2', 'wwgcbar_domain'); ?>
-							</label>
-						</th>
-						<td>
-							<textarea name="wwgcbar_settings[content12]" id="wwgcbar_settings[content12]" class="regular-text"><?php echo $wwgcbar_options['content12'] ?></textarea>
-						</td>
-					</tr>
-
 <!-- TEXT CONTENT 2 -->
 					<tr>
 						<th scope="row">
 							<label for="wwgcbar_settings[content2]">
+								<?php _e('Policy overview main text part 2', 'wwgcbar_domain'); ?>
+							</label>
+						</th>
+						<td>
+							<textarea name="wwgcbar_settings[content2]" id="wwgcbar_settings[content2]" class="regular-text"><?php echo isset($wwgcbar_options['content2'])?$wwgcbar_options['content2']:''; ?></textarea>
+						</td>
+					</tr>
+<!-- TEXT CONTENT 3 NECESSARY -->
+					<tr>
+						<th scope="row">
+							<label for="wwgcbar_settings[content3]">
 								<?php _e('Necessary cookies text', 'wwgcbar_domain'); ?>
 							</label>
 						</th>
 						<td>
-							<textarea name="wwgcbar_settings[content2]" id="wwgcbar_settings[content2]" class="regular-text"><?php echo $wwgcbar_options['content2'] ?></textarea>
+							<textarea name="wwgcbar_settings[content3]" id="wwgcbar_settings[content3]" class="regular-text"><?php echo isset($wwgcbar_options['content3'])?$wwgcbar_options['content3']:''; ?></textarea>
 						</td>
 					</tr>
-
-<!-- TEXT CONTENT 1 -->
+<!-- TEXT CONTENT 3 NONNECESARRY-->
 					<tr>
 						<th scope="row">
-							<label for="wwgcbar_settings[content3]">
+							<label for="wwgcbar_settings[content4]">
 								<?php _e('Non-Necessary cookies text', 'wwgcbar_domain'); ?>
 							</label>
 						</th>
 						<td>
-							<textarea name="wwgcbar_settings[content3]" id="wwgcbar_settings[content3]" class="regular-text"><?php echo $wwgcbar_options['content3'] ?></textarea>
+							<textarea name="wwgcbar_settings[content4]" id="wwgcbar_settings[content4]" class="regular-text"><?php echo isset($wwgcbar_options['content4'])?$wwgcbar_options['content4']:''; ?></textarea>
 						</td>
 					</tr>
-
 <!-- COOKIE BAR SETTINGS BUTTON SHORTCODE -->
 					<tr>
 						<th scope="row">
@@ -284,23 +319,19 @@ function wwgcbar_options_content() {
 							<div>
 								<label>Default button code</label>
 								<br>
-								<input class="regular-text" type="text" readonly value='<a id="wwgcbar-collapsed" href="#">Cookies</a>' />
+								<input class="regular-text" type="text" readonly value='<a id="wwgcbar-collapsed" href="/">Cookies</a>' />
 								<br><br>
-								<textarea name="wwgcbar_settings[cookie_shortcode]" id="wwgcbar_settings[cookie_shortcode]" class="regular-text"><?php echo $wwgcbar_options['cookie_shortcode'] ?></textarea>
+								<label>Custom button code</label>
+								<br>
+								<textarea name="wwgcbar_settings[cookie_shortcode]" id="wwgcbar_settings[cookie_shortcode]" class="regular-text"><?php echo isset($wwgcbar_options['cookie_shortcode'])?$wwgcbar_options['cookie_shortcode']:''; ?></textarea>
 							</div>
-
-
-
 						</td>
 					</tr>
-
-
-
-<!-- FORM END					 -->
+<!-- FORM END -->
 				</tbody>
 			</table>
-			<p class="submit">
-				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save changes', 'wwgcbar_domain'); ?>" />
+			<p class="submit" style="text-align:right;">
+				<input type="submit" name="submit" id="submit" class="button button-primary disabled" value="<?php _e('Save changes', 'wwgcbar_domain'); ?>" />
 			</p>
 		</form>
 	</div>

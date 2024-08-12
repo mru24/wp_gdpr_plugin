@@ -1,4 +1,4 @@
-console.log('WW GDPS scripts - OK');
+console.log('WW GDPR scripts - OK');
 
 const GA_tag = 'UA-177240674-1';
 const domain = '.easy-code.co.uk';
@@ -81,7 +81,10 @@ window.onload = () => {
   const showDescr = document.querySelectorAll('.wwgcbar-show-description');
   const closeModal = document.getElementById('wwgcbar-modal-close');
   const non_ess_cookies = document.getElementById('nncookies');
-  const cookieCollapsed = document.getElementById('wwgcbar-collapsed');
+  const cookieCollapsedByID = document.querySelector('#wwgcbar-collapsed');
+  const cookieCollapsedByClass = document.querySelector('.wwgcbar-collapsed');
+
+  console.log("BUTTON****",cookieCollapsedByClass);
 
   const checkboxValue = () => {
 
@@ -133,8 +136,16 @@ window.onload = () => {
   settingsBtn.addEventListener('click', showSettings);
   closeModal.addEventListener('click', closeSettings);
 
-  if(cookieCollapsed) {
-    cookieCollapsed.addEventListener('click', (e) => {
+  if(cookieCollapsedById.length>0) {
+  	console.log("cookie button id");
+    cookieCollapsedById.addEventListener('click', (e) => {
+      e.preventDefault();
+      consentPopup.classList.add('active');
+    })
+  }
+  if(cookieCollapsedByClass.length>0) {
+  	console.log("cookie button class");
+    cookieCollapsedByClass[0].addEventListener('click', (e) => {
       e.preventDefault();
       consentPopup.classList.add('active');
     })

@@ -1,27 +1,19 @@
-/* line 12, ../sass/screen.sass */
 .wwgcbar-clear {
   clear: both;
 }
 
-/* line 14, ../sass/screen.sass */
 .m-top-0 {
   margin-top: 0 !important;
 }
-
-/* line 16, ../sass/screen.sass */
 .m-bot-0 {
   margin-bottom: 0 !important;
 }
-
-/* line 19, ../sass/screen.sass */
 .wwgcbar-content,
 .wwgcbar-content p,
 .wwgcbar-content a,
 .wwgcbar-content span {
   font-size: 14px;
 }
-
-/* line 24, ../sass/screen.sass */
 .wwgcbar-content {
   position: fixed;
   z-index: 99999999;
@@ -32,17 +24,14 @@
   opacity: 0;
   transition: 0.5s;
 }
-/* line 33, ../sass/screen.sass */
 .wwgcbar-content.active {
   opacity: 1;
 }
-/* line 35, ../sass/screen.sass */
 .wwgcbar-content p {
-  margin: 0;
+  margin: 0 0 10px;
   padding: 0;
   box-sizing: border-box;
 }
-/* line 37, ../sass/screen.sass */
 .wwgcbar-content .wwgcbar-btn {
   display: inline-block;
   padding: 4px 9px;
@@ -51,34 +40,29 @@
   cursor: pointer;
   transition: 0.4s;
 }
-/* line 44, ../sass/screen.sass */
 .wwgcbar-content .wwgcbar-btn:first-child {
   margin-right: 5px;
 }
-/* line 46, ../sass/screen.sass */
 .wwgcbar-content .wwgcbar-btn a {
   color: inherit;
 }
-
-/* line 50, ../sass/screen.sass */
 .wwgcbar-content .container {
+  width: 95%;
+  max-width: 1200px;
   height: auto;
   margin: auto;
 }
-/* line 53, ../sass/screen.sass */
 .wwgcbar-content .container .left {
   float: left;
   width: 72%;
 }
 @media screen and (max-width: 1024px) {
-  /* line 53, ../sass/screen.sass */
   .wwgcbar-content .container .left {
     float: none;
     width: 100%;
     text-align: center;
   }
 }
-/* line 60, ../sass/screen.sass */
 .wwgcbar-content .container .right {
   float: right;
   width: 20%;
@@ -86,7 +70,6 @@
   text-align: right;
 }
 @media screen and (max-width: 1024px) {
-  /* line 60, ../sass/screen.sass */
   .wwgcbar-content .container .right {
     float: none;
     width: 100%;
@@ -94,8 +77,6 @@
     padding-top: 15px;
   }
 }
-
-/* line 73, ../sass/screen.sass */
 .wwgcbar-modal-wrapper {
   position: fixed;
   z-index: 99999999999999;
@@ -103,9 +84,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.6);
 }
-/* line 81, ../sass/screen.sass */
 .wwgcbar-modal-wrapper h2 {
   font-size: 21px;
   margin: 0 0 20px;
@@ -113,19 +94,16 @@
   border-bottom: 2px solid;
   border-color: inherit;
 }
-/* line 87, ../sass/screen.sass */
 .wwgcbar-modal-wrapper h3 {
   font-size: 19px;
   color: #333;
   margin: 0 0 15px;
 }
-/* line 91, ../sass/screen.sass */
 .wwgcbar-modal-wrapper p, .wwgcbar-modal-wrapper span {
   font-size: 16px;
   margin: 6px 0 15px;
   color: #666;
 }
-/* line 95, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-modal {
   width: 50%;
   margin: auto;
@@ -136,98 +114,84 @@
   padding: 25px 30px;
   border-radius: 5px;
   box-shadow: 0 0 15px #111;
+  max-height: 100%;
+  overflow-y: auto;
 }
-@media screen and (max-width: 1024px) {
-  /* line 95, ../sass/screen.sass */
-  .wwgcbar-modal-wrapper .wwgcbar-modal {
-    width: 99%;
-    padding: 15px;
-  }
-}
-/* line 108, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-modal #wwgcbar-modal-close {
-  width: 91%;
   text-align: right;
   font-size: 45px;
   color: #666;
   display: block;
   position: absolute;
   z-index: 999;
-  top: 7px;
-  height: 52px;
+  right: 25px;
+  line-height: 20px;
   cursor: pointer;
 }
-/* line 120, ../sass/screen.sass */
+@media screen and (max-width: 1024px) {
+  .wwgcbar-modal-wrapper .wwgcbar-modal {
+    width: 99%;
+    padding: 15px;
+  }
+  .wwgcbar-modal-wrapper .wwgcbar-modal #wwgcbar-modal-close {
+    right: 15px;
+  }
+}
 .wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row {
   padding: 10px;
   margin: 2px -10px;
   background: #f5f5f5;
 }
-/* line 124, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row .wwgcbar-modal-left,
 .wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row .wwgcbar-modal-right {
   box-sizing: border-box;
 }
-/* line 127, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row .wwgcbar-modal-left {
   float: left;
   width: 65%;
 }
-/* line 130, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row .wwgcbar-modal-right {
   text-align: right;
   float: right;
   width: 30%;
 }
-/* line 135, ../sass/screen.sass */
-.wwgcbar-modal-wrapper .wwgcbar-modal .wwgcbar-row p.wwgcbar-description.hidden {
-  max-height: 0;
-  opacity: 0;
-  transition: 0.5s;
+.wwgcbar-modal-wrapper {
+  p.wwgcbar-description.hidden {
+    display: none;
+  }
 }
-/* line 140, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-show-description {
   font-size: 14px;
   color: #333;
   text-decoration: underline;
   cursor: pointer;
 }
-/* line 145, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .wwgcbar-show-description.active {
   color: #aaa;
 }
-
-/* line 148, ../sass/screen.sass */
 .wwgcbar-modal-wrapper {
   transition: 0.5s;
 }
-/* line 150, ../sass/screen.sass */
 .wwgcbar-modal-wrapper.hidden {
   top: -10000px;
 }
-
-/* The switch - the box around the slider */
-/* line 156, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 55px;
 }
-/* line 161, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch .wwgcbar-checkbox-text {
   position: absolute;
   top: 38px;
   right: 0;
   color: #666;
 }
-/* line 166, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch input[type="checkbox"] {
   opacity: 0;
   width: 0;
   height: 0;
 }
-/* line 170, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch .slider {
   position: absolute;
   cursor: pointer;
@@ -239,7 +203,6 @@
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-/* line 180, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch .slider::before {
   position: absolute;
   content: "";
@@ -251,34 +214,26 @@
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-/* line 190, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch input:checked + .slider {
   background-color: #2196F3;
 }
-/* line 192, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
-/* line 194, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-/* line 198, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch .slider.round {
   border-radius: 34px;
 }
-/* line 200, ../sass/screen.sass */
 .wwgcbar-modal-wrapper .switch .slider.round:before {
   border-radius: 50%;
 }
-
-/* line 203, ../sass/screen.sass */
 #wwgcbar-collapsed {
   cursor: pointer;
 }
-/* line 205, ../sass/screen.sass */
 #wwgcbar-collapsed.hidden {
   display: none;
 }
